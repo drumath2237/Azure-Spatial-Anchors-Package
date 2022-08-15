@@ -29,7 +29,7 @@ public class RaycastPlacer : MonoBehaviour
         {
             return;
         }
-
+        
         placeObjectTransform.position = _hits[0].pose.position;
         placeObjectTransform.rotation = _hits[0].pose.rotation;
 

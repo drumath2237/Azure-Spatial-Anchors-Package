@@ -63,3 +63,5 @@ crashlytics-build.properties
 
 
 .idea/
+
+Assets/AzureSpatialAnchors.SDK/Resources/SpatialAnchorConfig.asset
