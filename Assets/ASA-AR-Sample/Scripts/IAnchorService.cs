@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 [Serializable]
 public struct AnchorInfo
@@ -17,4 +18,7 @@ public struct AnchorInfo
 
 public interface IAnchorService
 {
+    Task CreateAnchor(AnchorInfo anchorInfo);
+
+    Task<AnchorInfo?> TryGetLatestAnchor();
 }
