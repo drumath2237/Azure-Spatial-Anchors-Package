@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Threading.Tasks;
 
 [Serializable]
@@ -14,6 +15,12 @@ public struct AnchorInfo
     /// dateTime.toString()で生成される想定
     /// </summary>
     public string expireOn;
+
+    public AnchorInfo(string key, DateTime expirationDate)
+    {
+        anchorKey = key;
+        expireOn = expirationDate.ToString(CultureInfo.CurrentCulture);
+    }
 }
 
 public interface IAnchorService
