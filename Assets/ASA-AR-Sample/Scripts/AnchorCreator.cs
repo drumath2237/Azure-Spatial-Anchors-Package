@@ -17,6 +17,10 @@ public class AnchorCreator
 
     public Task StartSession() => _spatialAnchorManager.StartSessionAsync();
 
+    public void DestroySession() => _spatialAnchorManager.DestroySession();
+
+    public bool IsReadyForCreateAnchor => _spatialAnchorManager.IsReadyForCreate;
+
     public async Task<CloudSpatialAnchor> CreateAnchor(CloudNativeAnchor nativeAnchor, int anchorExpirationDays = 1)
     {
         if (!_spatialAnchorManager.IsReadyForCreate)
