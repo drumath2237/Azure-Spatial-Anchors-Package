@@ -49,7 +49,7 @@ public class AnchorFinder
     public async Task FindAnchor(CloudNativeAnchor nativeAnchor)
     {
         var anchorKey = await _anchorService.TryGetLatestAnchor();
-        if (anchorKey is null)
+        if (!anchorKey.HasValue)
         {
             return;
         }
