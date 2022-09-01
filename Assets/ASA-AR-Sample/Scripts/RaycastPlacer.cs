@@ -36,6 +36,13 @@ public class RaycastPlacer : MonoBehaviour
         placeObjectTransform.rotation = _hits[0].pose.rotation;
     }
 
+    /// <summary>
+    /// this code is quoted from
+    /// https://github.com/Unity-Technologies/arfoundation-samples/issues/25#issuecomment-567860260
+    /// thanks for digitalmkt.
+    /// </summary>
+    /// <param name="pos">screen position</param>
+    /// <returns></returns>
     private static bool IsPointOverUIObject(Vector2 pos)
     {
         if (EventSystem.current.IsPointerOverGameObject())
