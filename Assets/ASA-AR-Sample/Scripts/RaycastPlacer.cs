@@ -11,7 +11,7 @@ public class RaycastPlacer : MonoBehaviour
 
     [SerializeField] private Transform placeObjectTransform;
 
-    private List<ARRaycastHit> _hits = new();
+    private readonly List<ARRaycastHit> _hits = new();
 
     private void Update()
     {

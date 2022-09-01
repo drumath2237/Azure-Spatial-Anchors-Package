@@ -18,7 +18,7 @@ public class AnchorFinder
         _anchorService = anchorService;
     }
 
-    public Task StartSession()
+    public Task StartSessionAsync()
     {
         _spatialAnchorManager.AnchorLocated += UpdateNativeAnchor_OnAnchorFound;
         return _spatialAnchorManager.StartSessionAsync();
@@ -46,7 +46,7 @@ public class AnchorFinder
         OnAnchorFound?.Invoke(_nativeAnchor);
     }
 
-    public async Task FindAnchor(CloudNativeAnchor nativeAnchor)
+    public async Task StartFindAnchorAsync(CloudNativeAnchor nativeAnchor)
     {
         var anchorKey = await _anchorService.TryGetLatestAnchor();
         if (!anchorKey.HasValue)

@@ -15,19 +15,19 @@ public class AnchorCreator
         _anchorService = anchorService;
     }
 
-    public Task StartSession() => _spatialAnchorManager.StartSessionAsync();
+    public Task StartSessionAsync() => _spatialAnchorManager.StartSessionAsync();
 
     public void DestroySession() => _spatialAnchorManager.DestroySession();
 
     public bool IsReadyForCreateAnchor => _spatialAnchorManager.IsReadyForCreate;
 
-    public async Task<CloudSpatialAnchor> CreateAnchor(CloudNativeAnchor nativeAnchor, int anchorExpirationDays = 1)
+    public async Task<CloudSpatialAnchor> CreateAnchorAsync(CloudNativeAnchor nativeAnchor, int anchorExpirationDays = 1)
     {
         if (!_spatialAnchorManager.IsReadyForCreate)
         {
             return null;
         }
-
+        
         await nativeAnchor.NativeToCloud(false);
 
         var cloudSpatialAnchor = nativeAnchor.CloudAnchor;
