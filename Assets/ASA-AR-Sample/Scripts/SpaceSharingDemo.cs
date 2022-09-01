@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Azure.SpatialAnchors;
 using Microsoft.Azure.SpatialAnchors.Unity;
+using TMPro;
 using UnityEngine;
 
 public class SpaceSharingDemo : MonoBehaviour
@@ -15,6 +16,10 @@ public class SpaceSharingDemo : MonoBehaviour
     private AnchorCreator _anchorCreator;
     private AnchorFinder _anchorFinder;
 
+    [SerializeField] private TextMeshProUGUI logText;
+    [SerializeField] private TextMeshProUGUI sessionReadyText;
+
+
     private void Start()
     {
         _anchorService = new InMemoryAnchorService();
@@ -22,9 +27,22 @@ public class SpaceSharingDemo : MonoBehaviour
         _anchorFinder = new AnchorFinder(spatialAnchorManager, _anchorService);
     }
 
+    private void Update()
+    {
+        sessionReadyText.text = _anchorCreator.IsReadyForCreateAnchor ? "ready for create" : "not ready";
+    }
+
     public async void OnClickStartCreation()
     {
-        await _anchorCreator.StartSessionAsync();
+        try
+        {
+            await _anchorCreator.StartSessionAsync();
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e);
+            throw;
+        }
     }
 
     public async void OnClickCreateAnchor()
