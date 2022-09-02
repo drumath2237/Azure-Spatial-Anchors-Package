@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.SpatialAnchors;
 using Microsoft.Azure.SpatialAnchors.Unity;
 using UnityEngine;
+using UnityEngine.XR.ARFoundation;
 
 public class AnchorCreator
 {
@@ -28,6 +29,7 @@ public class AnchorCreator
             return null;
         }
         
+        nativeAnchor.SetPose(nativeAnchor.transform.position, nativeAnchor.transform.rotation);
         await nativeAnchor.NativeToCloud(false);
 
         var cloudSpatialAnchor = nativeAnchor.CloudAnchor;
