@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.Azure.SpatialAnchors.Unity;
 using TMPro;
 using UnityEngine;
@@ -6,8 +7,6 @@ using UnityEngine;
 internal enum AnchorOperationStatus
 {
     UnderstandingEnvironment,
-    ReadyForCreateAnchor,
-    CreatingAnchor,
     AnchorCreated,
     FindingAnchor,
     AnchorFound,
@@ -26,7 +25,7 @@ public class SpaceSharingDemo : MonoBehaviour
     private AnchorCreator _anchorCreator;
     private AnchorFinder _anchorFinder;
 
-    [SerializeField] private TextMeshProUGUI sessionReadyText;
+    [SerializeField] private TextMeshProUGUI statusText;
 
     private AnchorOperationStatus _anchorOperationStatus;
 
@@ -39,7 +38,21 @@ public class SpaceSharingDemo : MonoBehaviour
         _anchorOperationStatus = AnchorOperationStatus.None;
     }
 
-    public async void UpdateStatus()
+    private void Update()
+    {
+        statusText.text = _anchorOperationStatus switch
+        {
+            AnchorOperationStatus.None => "None",
+            AnchorOperationStatus.UnderstandingEnvironment =>
+                $"Understanding Env:{(int)(spatialAnchorManager.SessionStatus.ReadyForCreateProgress * 100f)}%",
+            AnchorOperationStatus.AnchorCreated => "Anchor Created",
+            AnchorOperationStatus.FindingAnchor => "Finding Anchor",
+            AnchorOperationStatus.AnchorFound => "Anchor Found",
+            _ => throw new ArgumentOutOfRangeException()
+        };
+    }
+
+    public async void ProceedOperations()
     {
         _anchorOperationStatus = _anchorOperationStatus switch
         {
@@ -47,6 +60,9 @@ public class SpaceSharingDemo : MonoBehaviour
                 => await StartCreation(_anchorOperationStatus),
             AnchorOperationStatus.UnderstandingEnvironment
                 => await CreateAnchorAsync(_anchorOperationStatus),
+            AnchorOperationStatus.AnchorCreated
+                => await StartFindingAnchor(_anchorOperationStatus),
+            _ => _anchorOperationStatus
         };
     }
 
@@ -87,14 +103,9 @@ public class SpaceSharingDemo : MonoBehaviour
     }
 
 
-    private void Update()
-    {
-        sessionReadyText.text = _anchorCreator.IsReadyForCreateAnchor ? "ready for create" : "not ready";
-    }
-
-
     private void OnAnchorFound(CloudNativeAnchor nativeAnchor)
     {
+        _anchorOperationStatus = AnchorOperationStatus.AnchorFound;
         _anchorFinder.DestroySession();
         _anchorFinder.OnAnchorFound -= OnAnchorFound;
     }
