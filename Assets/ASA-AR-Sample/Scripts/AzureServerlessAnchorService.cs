@@ -1,21 +1,38 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
+using UnityEngine;
 
 public class AzureServerlessAnchorService : IAnchorService
 {
     readonly string baseUrl;
 
-    public AzureServerlessAnchorService(string apiBaseUrl = "https://shoten13-anchorinfo.azurewebsites.net")
+    public AzureServerlessAnchorService(
+        string apiBaseUrl = @"https://shoten13-anchorinfo.azurewebsites.net")
     {
         baseUrl = apiBaseUrl;
     }
 
-    public Task CreateAnchor(AnchorInfo anchorInfo)
+    public async Task CreateAnchorAsync(AnchorInfo anchorInfo)
     {
-        throw new System.NotImplementedException();
+        var requestUrl = baseUrl + $"/create?anchorKey={anchorInfo.anchorKey}&expireOn={anchorInfo.expireOn}";
+        using var httpClient = new HttpClient();
+        await httpClient.PostAsync(requestUrl, null);
     }
 
-    public Task<AnchorInfo?> TryGetLatestAnchor()
+    public async Task<AnchorInfo?> TryGetLatestAnchorAsync()
     {
-        throw new System.NotImplementedException();
+         var requestUrl = baseUrl + "/latest";
+        using var httpClient = new HttpClient();
+        using var response = await httpClient.GetAsync(requestUrl);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            return null;
+        }
+
+        var textContent = await response.Content.ReadAsStringAsync();
+        var responseAnchorInfo = JsonUtility.FromJson<AnchorInfo>(textContent);
+
+        return responseAnchorInfo;
     }
 }

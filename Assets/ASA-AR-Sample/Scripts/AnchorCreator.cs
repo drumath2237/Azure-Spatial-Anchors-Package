@@ -42,7 +42,7 @@ public class AnchorCreator
                 return null;
             }
 
-            await _anchorService.CreateAnchor(new AnchorInfo(
+            await _anchorService.CreateAnchorAsync(new AnchorInfo(
                 cloudSpatialAnchor.Identifier,
                 cloudSpatialAnchor.Expiration.DateTime
             ));

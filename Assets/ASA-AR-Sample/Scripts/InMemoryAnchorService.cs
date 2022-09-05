@@ -8,13 +8,13 @@ public class InMemoryAnchorService : IAnchorService
     {
         _latestAnchorInfo = null;
     }
-    public Task CreateAnchor(AnchorInfo anchorInfo)
+    public Task CreateAnchorAsync(AnchorInfo anchorInfo)
     {
         _latestAnchorInfo = anchorInfo;
         return Task.CompletedTask;
     }
 
-    public Task<AnchorInfo?> TryGetLatestAnchor()
+    public Task<AnchorInfo?> TryGetLatestAnchorAsync()
     {
         return Task.FromResult(_latestAnchorInfo);
     }

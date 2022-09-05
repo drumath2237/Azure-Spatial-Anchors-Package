@@ -48,7 +48,7 @@ public class AnchorFinder
 
     public async Task StartFindAnchorAsync(CloudNativeAnchor nativeAnchor)
     {
-        var anchorKey = await _anchorService.TryGetLatestAnchor();
+        var anchorKey = await _anchorService.TryGetLatestAnchorAsync();
         if (!anchorKey.HasValue)
         {
             return;

@@ -25,7 +25,7 @@ public struct AnchorInfo
 
 public interface IAnchorService
 {
-    Task CreateAnchor(AnchorInfo anchorInfo);
+    Task CreateAnchorAsync(AnchorInfo anchorInfo);
 
-    Task<AnchorInfo?> TryGetLatestAnchor();
+    Task<AnchorInfo?> TryGetLatestAnchorAsync();
 }
