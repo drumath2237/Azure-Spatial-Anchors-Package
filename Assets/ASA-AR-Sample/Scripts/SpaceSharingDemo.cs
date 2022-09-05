@@ -32,11 +32,14 @@ public class SpaceSharingDemo : MonoBehaviour
 
     private void Start()
     {
-        _anchorService = new AzureServerlessAnchorService();
+        _anchorService = new InMemoryAnchorService();
         _anchorCreator = new AnchorCreator(spatialAnchorManager, _anchorService);
         _anchorFinder = new AnchorFinder(spatialAnchorManager, _anchorService);
         _anchorOperationStatus = AnchorOperationStatus.None;
     }
+
+    private int AnchorCreateReadyProgress() 
+        => (int)(spatialAnchorManager.SessionStatus.ReadyForCreateProgress * 100f);
 
     private void Update()
     {
@@ -44,7 +47,7 @@ public class SpaceSharingDemo : MonoBehaviour
         {
             AnchorOperationStatus.None => "None",
             AnchorOperationStatus.UnderstandingEnvironment =>
-                $"Understanding Env:{(int)(spatialAnchorManager.SessionStatus.ReadyForCreateProgress * 100f)}%",
+                $"Understanding Env:{AnchorCreateReadyProgress()}%",
             AnchorOperationStatus.AnchorCreated => "Anchor Created",
             AnchorOperationStatus.FindingAnchor => "Finding Anchor",
             AnchorOperationStatus.AnchorFound => "Anchor Found",
@@ -58,17 +61,22 @@ public class SpaceSharingDemo : MonoBehaviour
         {
             AnchorOperationStatus.None or AnchorOperationStatus.AnchorFound
                 => await StartCreation(_anchorOperationStatus),
+
             AnchorOperationStatus.UnderstandingEnvironment
                 => await CreateAnchorAsync(_anchorOperationStatus),
+
             AnchorOperationStatus.AnchorCreated
                 => await StartFindingAnchor(_anchorOperationStatus),
+
             _ => _anchorOperationStatus
         };
     }
 
-    private async Task<AnchorOperationStatus> StartCreation(AnchorOperationStatus status)
+    private async Task<AnchorOperationStatus> StartCreation(
+        AnchorOperationStatus status)
     {
-        if (status != AnchorOperationStatus.None && status != AnchorOperationStatus.AnchorFound)
+        if (status != AnchorOperationStatus.None
+            && status != AnchorOperationStatus.AnchorFound)
         {
             return status;
         }
@@ -77,9 +85,11 @@ public class SpaceSharingDemo : MonoBehaviour
         return AnchorOperationStatus.UnderstandingEnvironment;
     }
 
-    private async Task<AnchorOperationStatus> CreateAnchorAsync(AnchorOperationStatus status)
+    private async Task<AnchorOperationStatus> CreateAnchorAsync(
+        AnchorOperationStatus status)
     {
-        if (status != AnchorOperationStatus.UnderstandingEnvironment || !spatialAnchorManager.IsReadyForCreate)
+        if (status != AnchorOperationStatus.UnderstandingEnvironment
+            || !spatialAnchorManager.IsReadyForCreate)
         {
             return status;
         }
@@ -89,7 +99,8 @@ public class SpaceSharingDemo : MonoBehaviour
         return AnchorOperationStatus.AnchorCreated;
     }
 
-    private async Task<AnchorOperationStatus> StartFindingAnchor(AnchorOperationStatus status)
+    private async Task<AnchorOperationStatus> StartFindingAnchor(
+        AnchorOperationStatus status)
     {
         if (status != AnchorOperationStatus.AnchorCreated)
         {

@@ -12,7 +12,8 @@ public class AnchorFinder
 
     private CloudNativeAnchor _nativeAnchor = null;
 
-    public AnchorFinder(SpatialAnchorManager spatialAnchorManager, IAnchorService anchorService)
+    public AnchorFinder(
+        SpatialAnchorManager spatialAnchorManager, IAnchorService anchorService)
     {
         _spatialAnchorManager = spatialAnchorManager;
         _anchorService = anchorService;
@@ -30,7 +31,8 @@ public class AnchorFinder
         _spatialAnchorManager.DestroySession();
     }
 
-    private void UpdateNativeAnchor_OnAnchorFound(object sender, AnchorLocatedEventArgs args)
+    private void UpdateNativeAnchor_OnAnchorFound(
+        object sender, AnchorLocatedEventArgs args)
     {
         if (args.Status != LocateAnchorStatus.Located)
         {

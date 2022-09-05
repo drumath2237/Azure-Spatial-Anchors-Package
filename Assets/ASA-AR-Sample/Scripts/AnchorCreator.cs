@@ -9,7 +9,8 @@ public class AnchorCreator
     private readonly SpatialAnchorManager _spatialAnchorManager;
     private readonly IAnchorService _anchorService;
 
-    public AnchorCreator(SpatialAnchorManager anchorManager, IAnchorService anchorService)
+    public AnchorCreator(
+        SpatialAnchorManager anchorManager, IAnchorService anchorService)
     {
         _spatialAnchorManager = anchorManager;
         _anchorService = anchorService;
@@ -21,18 +22,23 @@ public class AnchorCreator
 
     public bool IsReadyForCreateAnchor => _spatialAnchorManager.IsReadyForCreate;
 
-    public async Task<CloudSpatialAnchor> CreateAnchorAsync(CloudNativeAnchor nativeAnchor, int anchorExpirationDays = 1)
+    public async Task<CloudSpatialAnchor> CreateAnchorAsync(
+        CloudNativeAnchor nativeAnchor,
+        int anchorExpirationDays = 1
+    )
     {
         if (!_spatialAnchorManager.IsReadyForCreate)
         {
             return null;
         }
-        
-        nativeAnchor.SetPose(nativeAnchor.transform.position, nativeAnchor.transform.rotation);
+
+        var anchorTransform = nativeAnchor.transform;
+        nativeAnchor.SetPose(anchorTransform.position, anchorTransform.rotation);
         await nativeAnchor.NativeToCloud(false);
 
         var cloudSpatialAnchor = nativeAnchor.CloudAnchor;
-        cloudSpatialAnchor.Expiration = DateTimeOffset.Now.AddDays(anchorExpirationDays);
+        cloudSpatialAnchor.Expiration
+            = DateTimeOffset.Now.AddDays(anchorExpirationDays);
 
         try
         {
