@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -27,7 +25,8 @@ public class RaycastPlacer : MonoBehaviour
 
         var touchPosition = Input.GetTouch(0).position;
 
-        if (IsPointOverUIObject(touchPosition) || !arRaycastManager.Raycast(touchPosition, _hits))
+        var isRaycastHit = arRaycastManager.Raycast(touchPosition, _hits);
+        if (IsPointOverUIObject(touchPosition) || !isRaycastHit)
         {
             return;
         }
@@ -38,7 +37,7 @@ public class RaycastPlacer : MonoBehaviour
 
     /// <summary>
     /// this code is quoted from
-    /// https://github.com/Unity-Technologies/arfoundation-samples/issues/25#issuecomment-567860260
+    /// https://github.com/Unity-Technologies/arfoundation-samples/issues/25
     /// thanks for digitalmkt.
     /// </summary>
     /// <param name="pos">screen position</param>
@@ -49,13 +48,13 @@ public class RaycastPlacer : MonoBehaviour
         {
             return false;
         }
-        
-        var eventDataCurrentPosition = new PointerEventData(EventSystem.current)
+
+        var pointerEventData = new PointerEventData(EventSystem.current)
         {
             position = new Vector2(pos.x, pos.y)
         };
         var results = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        EventSystem.current.RaycastAll(pointerEventData, results);
         return results.Count > 0;
     }
 }
