@@ -68,7 +68,7 @@ public class SpaceSharingDemo : MonoBehaviour
 
     private async Task<AnchorOperationStatus> StartCreation(AnchorOperationStatus status)
     {
-        if (status is not AnchorOperationStatus.None or AnchorOperationStatus.AnchorFound)
+        if (status != AnchorOperationStatus.None && status != AnchorOperationStatus.AnchorFound)
         {
             return status;
         }
@@ -89,7 +89,7 @@ public class SpaceSharingDemo : MonoBehaviour
         return AnchorOperationStatus.AnchorCreated;
     }
 
-    async Task<AnchorOperationStatus> StartFindingAnchor(AnchorOperationStatus status)
+    private async Task<AnchorOperationStatus> StartFindingAnchor(AnchorOperationStatus status)
     {
         if (status != AnchorOperationStatus.AnchorCreated)
         {

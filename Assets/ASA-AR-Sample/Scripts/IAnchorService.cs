@@ -19,7 +19,7 @@ public struct AnchorInfo
     public AnchorInfo(string key, DateTime expirationDate)
     {
         anchorKey = key;
-        expireOn = expirationDate.ToString(CultureInfo.CurrentCulture);
+        expireOn = expirationDate.ToString("yyyyMMddHHmmss");
     }
 }
 
