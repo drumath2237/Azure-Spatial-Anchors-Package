@@ -32,13 +32,14 @@ public class SpaceSharingDemo : MonoBehaviour
 
     private void Start()
     {
-        _anchorService = new InMemoryAnchorService();
+        // InMemoryAnchorService()から変更
+        _anchorService = new AzureServerlessAnchorService();
         _anchorCreator = new AnchorCreator(spatialAnchorManager, _anchorService);
         _anchorFinder = new AnchorFinder(spatialAnchorManager, _anchorService);
         _anchorOperationStatus = AnchorOperationStatus.None;
     }
 
-    private int AnchorCreateReadyProgress() 
+    private int AnchorCreateReadyProgress()
         => (int)(spatialAnchorManager.SessionStatus.ReadyForCreateProgress * 100f);
 
     private void Update()

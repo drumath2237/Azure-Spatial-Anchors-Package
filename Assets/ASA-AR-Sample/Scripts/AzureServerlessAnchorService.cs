@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -8,29 +7,27 @@ public class AzureServerlessAnchorService : IAnchorService
     readonly string baseUrl;
 
     public AzureServerlessAnchorService(
-        string apiBaseUrl = @"https://shoten13-anchorinfo.azurewebsites.net/api")
+        string apiBaseUrl
+            = @"https://shoten13-anchorinfo.azurewebsites.net/api"
+    )
     {
         baseUrl = apiBaseUrl;
     }
 
     public async Task CreateAnchorAsync(AnchorInfo anchorInfo)
     {
-        var requestUrl = baseUrl + $"/create?anchorKey={anchorInfo.anchorKey}&expireOn={anchorInfo.expireOn}";
+        var requestUrl = baseUrl + "/create" +
+                         $"?anchorKey={anchorInfo.anchorKey}" +
+                         $"&expireOn={anchorInfo.expireOn}";
+        
         using var httpClient = new HttpClient();
-        try
-        {
-            await httpClient.PostAsync(requestUrl, null);
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e);
-            throw;
-        }
+        await httpClient.PostAsync(requestUrl, null);
     }
 
     public async Task<AnchorInfo?> TryGetLatestAnchorAsync()
     {
         var requestUrl = baseUrl + "/latest";
+        
         using var httpClient = new HttpClient();
         using var response = await httpClient.GetAsync(requestUrl);
 
