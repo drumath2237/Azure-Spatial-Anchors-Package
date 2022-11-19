@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/ASA-AR-Sample/Scenes/Main.unity
+    path: Assets/Azure-Spatial-Anchors-Package/Samples/Scenes/Main.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 2e5d3f9f67b11054ab52bb74d6762e5c, type: 2}

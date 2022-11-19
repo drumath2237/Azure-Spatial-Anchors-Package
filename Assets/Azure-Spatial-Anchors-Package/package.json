@@ -1,0 +1,12 @@
+﻿{
+  "name": "com.drumath2237.azure-spatial-anchors-package",
+  "version": "0.1.0",
+  "displayName": "Azure Spatial Anchors Package",
+  "description": "Package for Azure Spatial Anchors",
+  "unity": "2021.3",
+  "author": {
+    "name": "drumath2237",
+    "email": "2237k.drumath@gmail.com",
+    "url": "https://twitter.com/ninisan_drumath"
+  }
+}

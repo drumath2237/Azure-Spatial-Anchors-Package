@@ -1,21 +1,25 @@
 ﻿using System.Threading.Tasks;
 
-public class InMemoryAnchorService : IAnchorService
+namespace AzureSpatialAnchorsPackage
 {
-    private AnchorInfo? _latestAnchorInfo;
+    public class InMemoryAnchorService : IAnchorService
+    {
+        private AnchorInfo? _latestAnchorInfo;
 
-    public InMemoryAnchorService()
-    {
-        _latestAnchorInfo = null;
-    }
-    public Task CreateAnchorAsync(AnchorInfo anchorInfo)
-    {
-        _latestAnchorInfo = anchorInfo;
-        return Task.CompletedTask;
-    }
+        public InMemoryAnchorService()
+        {
+            _latestAnchorInfo = null;
+        }
 
-    public Task<AnchorInfo?> TryGetLatestAnchorAsync()
-    {
-        return Task.FromResult(_latestAnchorInfo);
+        public Task CreateAnchorAsync(AnchorInfo anchorInfo)
+        {
+            _latestAnchorInfo = anchorInfo;
+            return Task.CompletedTask;
+        }
+
+        public Task<AnchorInfo?> TryGetLatestAnchorAsync()
+        {
+            return Task.FromResult(_latestAnchorInfo);
+        }
     }
 }

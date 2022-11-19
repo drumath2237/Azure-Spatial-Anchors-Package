@@ -2,43 +2,46 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class AzureServerlessAnchorService : IAnchorService
+namespace AzureSpatialAnchorsPackage
 {
-    readonly string baseUrl;
-
-    public AzureServerlessAnchorService(
-        string apiBaseUrl
-            = @"https://shoten13-anchorinfo.azurewebsites.net/api"
-    )
+    public class AzureServerlessAnchorService : IAnchorService
     {
-        baseUrl = apiBaseUrl;
-    }
+        readonly string baseUrl;
 
-    public async Task CreateAnchorAsync(AnchorInfo anchorInfo)
-    {
-        var requestUrl = baseUrl + "/create" +
-                         $"?anchorKey={anchorInfo.anchorKey}" +
-                         $"&expireOn={anchorInfo.expireOn}";
-        
-        using var httpClient = new HttpClient();
-        await httpClient.PostAsync(requestUrl, null);
-    }
-
-    public async Task<AnchorInfo?> TryGetLatestAnchorAsync()
-    {
-        var requestUrl = baseUrl + "/latest";
-        
-        using var httpClient = new HttpClient();
-        using var response = await httpClient.GetAsync(requestUrl);
-
-        if (!response.IsSuccessStatusCode)
+        public AzureServerlessAnchorService(
+            string apiBaseUrl
+                = @"https://shoten13-anchorinfo.azurewebsites.net/api"
+        )
         {
-            return null;
+            baseUrl = apiBaseUrl;
         }
 
-        var textContent = await response.Content.ReadAsStringAsync();
-        var responseAnchorInfo = JsonUtility.FromJson<AnchorInfo>(textContent);
+        public async Task CreateAnchorAsync(AnchorInfo anchorInfo)
+        {
+            var requestUrl = baseUrl + "/create" +
+                             $"?anchorKey={anchorInfo.anchorKey}" +
+                             $"&expireOn={anchorInfo.expireOn}";
 
-        return responseAnchorInfo;
+            using var httpClient = new HttpClient();
+            await httpClient.PostAsync(requestUrl, null);
+        }
+
+        public async Task<AnchorInfo?> TryGetLatestAnchorAsync()
+        {
+            var requestUrl = baseUrl + "/latest";
+
+            using var httpClient = new HttpClient();
+            using var response = await httpClient.GetAsync(requestUrl);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            var textContent = await response.Content.ReadAsStringAsync();
+            var responseAnchorInfo = JsonUtility.FromJson<AnchorInfo>(textContent);
+
+            return responseAnchorInfo;
+        }
     }
 }

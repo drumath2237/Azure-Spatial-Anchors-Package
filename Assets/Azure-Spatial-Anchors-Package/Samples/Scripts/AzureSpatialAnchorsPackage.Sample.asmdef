@@ -1,0 +1,21 @@
+{
+    "name": "AzureSpatialAnchorsPackage.Sample",
+    "rootNamespace": "",
+    "references": [
+        "GUID:cea456fb85d819645899d08b84466140",
+        "GUID:33d8827e6b886c24980a9ae3153d16c9",
+        "GUID:a9420e37d7990b54abdef6688edbe313",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:92703082f92b41ba80f0d6912de66115",
+        "GUID:e70fe346dd572704099eb9fd7bdc6639"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
