@@ -1,6 +1,8 @@
 {
   "dependencies": {
     "com.microsoft.azure.spatial-anchors-sdk.android": "2.13.0",
+    "com.microsoft.azure.spatial-anchors-sdk.ios": "2.13.0",
+    "com.microsoft.azure.spatial-anchors-sdk.windows": "2.13.0",
     "com.microsoft.azure.spatial-anchors-sdk.core": "2.13.0",
     "com.unity.collab-proxy": "1.15.17",
     "com.unity.feature.development": "1.0.1",
