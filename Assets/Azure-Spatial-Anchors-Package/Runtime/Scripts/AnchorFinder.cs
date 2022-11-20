@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !UNITY_STANDALONE
+using System;
 using System.Threading.Tasks;
 using Microsoft.Azure.SpatialAnchors;
 using Microsoft.Azure.SpatialAnchors.Unity;
@@ -66,3 +67,4 @@ namespace AzureSpatialAnchorsPackage
         }
     }
 }
+#endif

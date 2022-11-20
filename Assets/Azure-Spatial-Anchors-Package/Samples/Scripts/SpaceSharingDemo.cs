@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.Azure.SpatialAnchors.Unity;
 using TMPro;
 using UnityEngine;
+
+#if !UNITY_STANDALONE
+using Microsoft.Azure.SpatialAnchors.Unity;
+#endif
 
 namespace AzureSpatialAnchorsPackage.Sample
 {
@@ -17,6 +20,7 @@ namespace AzureSpatialAnchorsPackage.Sample
 
     public class SpaceSharingDemo : MonoBehaviour
     {
+#if !UNITY_STANDALONE
         [SerializeField] private SpatialAnchorManager spatialAnchorManager;
 
         [SerializeField] private CloudNativeAnchor creationAnchor;
@@ -118,5 +122,6 @@ namespace AzureSpatialAnchorsPackage.Sample
             _anchorFinder.DestroySession();
             _anchorFinder.OnAnchorFound -= OnAnchorFound;
         }
+#endif
     }
 }
